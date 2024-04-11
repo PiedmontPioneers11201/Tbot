@@ -1,99 +1,99 @@
 package Tbot;
 
-public class Arm extends Basic{
+public class Arm extends Base{
     
     boolean stowed = false;
 
     public class Shoulder {
-        public DcMotor  shoulder = null;
-        shoulder = hardwareMap.get(DcMotor.class, "shoulder");
+        DcMotor  shoulderMotor = null;
+        shoulderMotor = hardwareMap.get(DcMotor.class, "shoulderMotor");
         final double ENCODER_CONSTANT = 100;
 
-        public void goTo(float targetAngle) {
-            double currentPosition=shoulder.getCurrentPosition();
+        void goTo(float targetAngle) {
+            double currentPosition=shoulderMotor.getCurrentPosition();
             double targetPostion=currentPosition-targetAngle*
 
-            shoulder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            shoulderMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-            shoulder.setTargetPosition(targetPostion);
-            shoulder.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            shoulder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            shoulder.setPower(0.2);
+            shoulderMotor.setTargetPosition(targetPostion);
+            shoulderMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            shoulderMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            shoulderMotor.setPower(0.2);
         }
 
-        public void teleOp() {
-            shoulder.setPower(gamepad2.left_stick_y);
-            telemetry.addData("Shoulder: Power: %0.2f %, Position: %0.1f °",shoulder.getPower()*100,shoulder.getPosition());
+        void teleOp() {
+            shoulderMotor.setPower(gamepad2.left_stick_y);
+            telemetry.addData("Shoulder: Power: %0.2f %, Position: %0.1f °",shoulderMotor.getPower()*100,shoulderMotor.getPosition());
         }
 
         public float getAngle() {
-            return shoulder.getCurrentPosition()/ENCODER_CONSTANT;
+            return shoulderMotor.getCurrentPosition()/ENCODER_CONSTANT;
         }
     }
 
     public class Elbow {
-        public DcMotor  elbow = null;
-        elbow = hardwareMap.get(DcMotor.class, "elbow");
+        DcMotor  elbowMotor = null;
+        elbowMotor = hardwareMap.get(DcMotor.class, "elbowMotor");
         final double ENCODER_CONSTANT = 100;
 
-        public void goTo(float targetAngle) {
-            double currentPosition=shoulder.getCurrentPosition();
+        void goTo(float targetAngle) {
+            double currentPosition=shoulderMotor.getCurrentPosition();
             double targetPostion=currentPosition-targetAngle*
 
-            elbow.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            elbowMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-            elbow.setTargetPosition(targetPostion);
-            elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            elbow.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            elbow.setPower(0.2);
+            elbowMotor.setTargetPosition(targetPostion);
+            elbowMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            elbowMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            elbowMotor.setPower(0.2);
         }
 
-        public void teleOp() {
-            elbow.setPower(gamepad2.right_stick_y);
-            telemetry.addData("Elbow: Power: %0.2f %, Position: %0.1f °",elbow.getPower()*100,elbow.getPosition());
+        void teleOp() {
+            elbowMotor.setPower(gamepad2.right_stick_y);
+            telemetry.addData("Elbow: Power: %0.2f %, Position: %0.1f °",elbowMotor.getPower()*100,elbowMotor.getPosition());
         }
 
-        public float getAngle() {
-            return elbow.getCurrentPosition()/ENCODER_CONSTANT;
+        float getAngle() {
+            return elbowMotor.getCurrentPosition()/ENCODER_CONSTANT;
         }
     }
 
     public class Wrist {
-        public DcMotor  wrist = null;
-        wrist = hardwareMap.get(DcMotor.class, "wrist");
+        DcMotor  wristMotor = null;
+        wristMotor = hardwareMap.get(DcMotor.class, "wristMotor");
         final double ENCODER_CONSTANT = 100;
 
-        public void goTo(float targetAngle) {
-            double currentPosition=shoulder.getCurrentPosition();
+        void goTo(float targetAngle) {
+            double currentPosition=shoulderMotor.getCurrentPosition();
             double targetPostion=currentPosition-targetAngle*
 
-            wrist.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            wristMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-            wrist.setTargetPosition(targetPostion);
-            wrist.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            wrist.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            wrist.setPower(0.2);
+            wristMotor.setTargetPosition(targetPostion);
+            wristMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            wristMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            wristMotor.setPower(0.2);
         }
 
-        public void teleOp() {
-            wrist.setPower(gamepad2.left_stick_x);
-            telemetry.addData("Wrist: Power: %0.2f %, Position: %0.1f °",wrist.getPower()*100,wrist.getPosition());
+        void teleOp() {
+            wristMotor.setPower(gamepad2.left_stick_x);
+            telemetry.addData("Wrist: Power: %0.2f %, Position: %0.1f °",wristMotor.getPower()*100,wristMotor.getPosition());
         }
 
-        public float getAngle() {
-            return wrist.getCurrentPosition()/ENCODER_CONSTANT;
+        float getAngle() {
+            return wristMotor.getCurrentPosition()/ENCODER_CONSTANT;
         }
     }
     
-    Shoulder shoulder = new Shoulder();
-    Elbow    elbow    = new Elbow();
-    Wrist    wrist    = new Wrist();
+    Shoulder shoulderMotor = new Shoulder();
+    Elbow    elbowMotor    = new Elbow();
+    Wrist    wristMotor    = new Wrist();
 
     public void stowArm() {
         if (!stowed) {
-            shoulder.goTo(100); // calibrate
-            wrist.goTo(100); // calibrate
-            elbow.goTo(100); // calibrate
+            shoulderMotor.goTo(100); // calibrate
+            wristMotor.goTo(100); // calibrate
+            elbowMotor.goTo(100); // calibrate
         }
     }
 }

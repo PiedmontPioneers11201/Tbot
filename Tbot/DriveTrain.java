@@ -1,6 +1,6 @@
 package Tbot;
 
-public class DriveTrain {
+public class DriveTrain extends Base{
     DcMotor    motors[]  = new DcMotor[3];
 
     DcMotor    frontLeftDrive   = null;
@@ -11,8 +11,8 @@ public class DriveTrain {
     double frontRightDrivePower = 0;
     double backDrivePower = 0;
         
-    public double driveScale = 1;
-    public double turnScale = -1;
+    double driveScale = 1;
+    double turnScale = -1;
 
     frontLeftDrive  = hardwareMap.get(DcMotor.class, "frontLeftDrive");
     frontRightDrive = hardwareMap.get(DcMotor.class, "frontRightDrive");
@@ -22,7 +22,7 @@ public class DriveTrain {
     frontRightDrivePower = 0;
     backDrivePower = 0;
 
-    public void teleOp() {
+    void teleOp() {
         double driveInput = gamepad1.left_stick_y;
         double turnInput  = gamepad1.right_stick_x;
 
