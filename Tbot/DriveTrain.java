@@ -22,15 +22,15 @@ public class DriveTrain extends Base{
     frontRightDrivePower = 0;
     backDrivePower = 0;
 
-    void teleOp() {
-        double driveInput = gamepad1.left_stick_y;
-        double turnInput  = gamepad1.right_stick_x;
+    public void teleOp() {
+        public double driveInput = gamepad1.left_stick_y;
+        public double turnInput  = gamepad1.right_stick_x;
 
         frontLeftDrivePower = driveScale*driveInput+turnScale*turnInput;
         frontRightDrivePower = driveScale*driveInput-turnScale*turnInput;
         backDrivePower = driveScale*driveInput;
             
-        double scale = 1;
+        public double scale = 1;
         
         if (gamepad1.dpad_up) {
             driveScale = (driveScale==0.2)?1:0.2;
