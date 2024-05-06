@@ -7,8 +7,18 @@ import org.firstinspires.ftc.robotcore.external.navigation.*;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import com.qualcomm.robotcore.hardware.*;
 
-@TeleOp(name="TbotTeleOp", group ="Concept")
-public class TbotTeleOp extends LinearOpMode
+
+/*
+ * !!! ATTENTION !!!
+ * 
+ * The classes Claw and Arm both need calibration to specific positions, as well as proper configuration.
+ * Expansion Hub DcMotors should be named appropriatly (shoulder, elbowMotor, wristMotor), and Servos (thumb, finger)
+ * 
+ * Delete when calibrated.
+ */
+
+@TeleOp(name="TbotMainDrive", group ="Concept")
+public class TbotMainDrive extends LinearOpMode
 {
     DcMotor    motors[]  = new DcMotor[3];
 
@@ -144,9 +154,9 @@ public class TbotTeleOp extends LinearOpMode
             double driveScale = 0.4;
             double turnScale = 0.4;
             
-            if (gamepad1.right_trigger >= 0.2) {
-                driveScale = gamepad1.right_trigger;
-                turnScale = gamepad1.right_trigger;
+            if (gamepad1.right_bumper || gamepad1.left_bumper) {
+                driveScale = 1;
+                turnScale = 1;
             }
             
             frontLeftDrivePower = driveScale*driveInput+(turnScale*turnInput);
@@ -154,14 +164,13 @@ public class TbotTeleOp extends LinearOpMode
             backDrivePower = driveScale*driveInput;
 
 /*
-            if (gamepad2.right_trigger > 0.1) {
+            if (gamepad1.right_trigger > 0.1) {
                 if (claw.clawClosed()) {
                     claw.open();
                 } else {
                     claw.close();
                 }
             }
-
 */
             arm.shoulder.opModeActivity();
             arm.elbow.opModeActivity();
