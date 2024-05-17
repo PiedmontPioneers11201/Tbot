@@ -35,6 +35,8 @@ public class TbotMainDrive extends LinearOpMode
     
     public double driveScale = 1;
     public double turnScale = -1;
+
+    final double MIN_DRIVE_SCALE = 0.5;
 /*
     public class Claw {
         public void close() {
@@ -151,17 +153,20 @@ public class TbotMainDrive extends LinearOpMode
             double turnInput  = gamepad1.right_stick_x;
             
             double scale = 1;
-            double driveScale = 0.4;
-            double turnScale = 0.4;
+            double driveScale = (gamepad1.right_bumper || gamepad1.left_bumper)?1.0:MIN_DRIVE_SCALE;
+            double turnScale  = (gamepad1.right_bumper || gamepad1.left_bumper)?1.0:MIN_DRIVE_SCALE;
             
-            if (gamepad1.right_bumper || gamepad1.left_bumper) {
-                driveScale = 1;
-                turnScale = 1;
+            if (gamepad1.right_trigger >= 0.1 || gamepad1.left_trigger >= 0.1) {
+                driveScale = MIN_DRIVE_SCALE-(gamepad1.right_trigger+gamepad1.left_trigger)/4;
+                turnScale  = MIN_DRIVE_SCALE-(gamepad1.right_trigger+gamepad1.left_trigger)/4;
             }
+
+            int direction = (driveInput>=0)?-1:1;
             
-            frontLeftDrivePower = driveScale*driveInput+(turnScale*turnInput);
-            frontRightDrivePower = -driveScale*driveInput+(turnScale*turnInput);
+            frontLeftDrivePower = driveScale*driveInput+(turnScale*turnInput*direction);
+            frontRightDrivePower = -driveScale*driveInput+(turnScale*turnInput*direction);
             backDrivePower = driveScale*driveInput;
+
 
 /*
             if (gamepad1.right_trigger > 0.1) {
