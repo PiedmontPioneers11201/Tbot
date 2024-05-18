@@ -37,7 +37,7 @@ public class TbotMainDrive extends LinearOpMode
     public double turnScale = -1;
 
     final double MIN_DRIVE_SCALE = 0.5;
-/*
+
     public class Claw {
         public void close() {
             finger.setPosition(0); // calibrate
@@ -57,7 +57,7 @@ public class TbotMainDrive extends LinearOpMode
             }
         }
     }
-*/
+
     public class Arm {
 
         boolean stowed = false;
@@ -128,8 +128,8 @@ public class TbotMainDrive extends LinearOpMode
         frontRightDrive = hardwareMap.get(DcMotor.class, "frontRightDrive");
         backDrive       = hardwareMap.get(DcMotor.class, "backDrive");
 
-        //thumb           = hardwareMap.get(Servo.class, "thumb");
-        //finger          = hardwareMap.get(Servo.class, "finger");
+        thumb           = hardwareMap.get(Servo.class, "thumb");
+        finger          = hardwareMap.get(Servo.class, "finger");
         
         frontLeftDrivePower = 0;
         frontRightDrivePower = 0;
@@ -141,7 +141,7 @@ public class TbotMainDrive extends LinearOpMode
     {
         initRobot();
 
-        //Claw claw = new Claw();
+        Claw claw = new Claw();
         Arm arm = new Arm();
 
         waitForStart();
@@ -168,7 +168,7 @@ public class TbotMainDrive extends LinearOpMode
             backDrivePower = driveScale*driveInput;
 
 
-/*
+
             if (gamepad1.right_trigger > 0.1) {
                 if (claw.clawClosed()) {
                     claw.open();
@@ -176,7 +176,7 @@ public class TbotMainDrive extends LinearOpMode
                     claw.close();
                 }
             }
-*/
+
             arm.shoulder.opModeActivity();
             arm.elbow.opModeActivity();
             arm.wrist.opModeActivity();
